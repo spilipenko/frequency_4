@@ -14,6 +14,6 @@ alpha_x_quadrupole(X0,X1), alpha_y_quadrupole(X0,X1), alpha_z_quadrupole(X0,X1)
 ```
 The actual deflection for the body of mass $M$, equatorial radius $R$ and dimensionless coefficient of second zonal harmonic $J_2$ is
 ```
-alpha_i = 2(1+gamma) M J_2 R**2 alpha_i_quadrupole(X0,X1)
+alpha_i = 2*(1+gamma)*M*J_2*R**2 * alpha_i_quadrupole(X0,X1)
 ```
 
