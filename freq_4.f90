@@ -3,6 +3,337 @@ implicit real*8 (a-z)
 
 contains
 
+function alpha_x_r1(X0,X1)
+    real*8 :: X0(3), X1(3)
+    x_0 = X0(1)
+    y_0 = X0(2)
+    z_0 = X0(3)
+    x_1 = X1(1)
+    y_1 = X1(2)
+    z_1 = X1(3)
+    l = dsqrt((x_1-x_0)**2 + (y_1-y_0)**2 + (z_1-z_0)**2)
+    k_x = (x_1-x_0)/l
+    k_y = (y_1-y_0)/l
+    k_z = (z_1-z_0)/l
+    r0 = dsqrt(x_0**2+y_0**2+z_0**2)
+    r1 = dsqrt(x_1**2+y_1**2+z_1**2)
+    kr = k_x*x_0+k_y*y_0+k_z*z_0
+    d_x = x_0 - k_x*kr
+    d_y = y_0 - k_y*kr
+    d_z = z_0 - k_z*kr
+    d = dsqrt(d_x**2+d_y**2+d_z**2)
+    alpha_x_r1 = k_x*kr*l/(d**2*r1) + k_x*kr*x_0/(d**2*r1) - k_x*kr*x_0/(d**2*r0) + k_x*l &
+      *x_0/(d**2*r1) + k_x*r0**2/(d**2*r1) - k_x*r0/d**2 + k_y*kr*y_0/( &
+      d**2*r1) - k_y*kr*y_0/(d**2*r0) + k_y*l*y_0/(d**2*r1) + k_z*kr* &
+      z_0/(d**2*r1) - k_z*kr*z_0/(d**2*r0) - kr*l/(d**2*r1) - kr*x_0/(d &
+      **2*r1) + kr*x_0/(d**2*r0) - l*x_0/(d**2*r1) - r0**2/(d**2*r1) + &
+      r0/d**2 - z_0**2/(d**2*r1) + z_0*z_1/(d**2*r1)
+end function alpha_x_r1
+
+function alpha_y_r1(X0,X1)
+    real*8 :: X0(3), X1(3)
+    x_0 = X0(1)
+    y_0 = X0(2)
+    z_0 = X0(3)
+    x_1 = X1(1)
+    y_1 = X1(2)
+    z_1 = X1(3)
+    l = dsqrt((x_1-x_0)**2 + (y_1-y_0)**2 + (z_1-z_0)**2)
+    k_x = (x_1-x_0)/l
+    k_y = (y_1-y_0)/l
+    k_z = (z_1-z_0)/l
+    r0 = dsqrt(x_0**2+y_0**2+z_0**2)
+    r1 = dsqrt(x_1**2+y_1**2+z_1**2)
+    kr = k_x*x_0+k_y*y_0+k_z*z_0
+    d_x = x_0 - k_x*kr
+    d_y = y_0 - k_y*kr
+    d_z = z_0 - k_z*kr
+    d = dsqrt(d_x**2+d_y**2+d_z**2)
+    alpha_y_r1 = k_x*kr*x_0/(d**2*r1) - k_x*kr*x_0/(d**2*r0) + k_x*l*x_0/(d**2*r1) + k_y* &
+      kr*l/(d**2*r1) + k_y*kr*y_0/(d**2*r1) - k_y*kr*y_0/(d**2*r0) + &
+      k_y*l*y_0/(d**2*r1) + k_y*r0**2/(d**2*r1) - k_y*r0/d**2 + k_z*kr* &
+      z_0/(d**2*r1) - k_z*kr*z_0/(d**2*r0) - kr*l/(d**2*r1) - kr*y_0/(d &
+      **2*r1) + kr*y_0/(d**2*r0) - l*y_0/(d**2*r1) - r0**2/(d**2*r1) + &
+      r0/d**2 - z_0**2/(d**2*r1) + z_0*z_1/(d**2*r1)
+end function alpha_y_r1
+
+function alpha_z_r1(X0,X1)
+    real*8 :: X0(3), X1(3)
+    x_0 = X0(1)
+    y_0 = X0(2)
+    z_0 = X0(3)
+    x_1 = X1(1)
+    y_1 = X1(2)
+    z_1 = X1(3)
+    l = dsqrt((x_1-x_0)**2 + (y_1-y_0)**2 + (z_1-z_0)**2)
+    k_x = (x_1-x_0)/l
+    k_y = (y_1-y_0)/l
+    k_z = (z_1-z_0)/l
+    r0 = dsqrt(x_0**2+y_0**2+z_0**2)
+    r1 = dsqrt(x_1**2+y_1**2+z_1**2)
+    kr = k_x*x_0+k_y*y_0+k_z*z_0
+    d_x = x_0 - k_x*kr
+    d_y = y_0 - k_y*kr
+    d_z = z_0 - k_z*kr
+    d = dsqrt(d_x**2+d_y**2+d_z**2)
+    alpha_z_r1 = k_x*kr*x_0/(d**2*r1) - k_x*kr*x_0/(d**2*r0) + k_x*l*x_0/(d**2*r1) + k_y* &
+      kr*y_0/(d**2*r1) - k_y*kr*y_0/(d**2*r0) + k_y*l*y_0/(d**2*r1) + &
+      k_z*kr*z_0/(d**2*r1) - k_z*kr*z_0/(d**2*r0) + k_z*r0**2/(d**2*r1 &
+      ) - k_z*r0/d**2 - kr*l/(d**2*r1) - 2*kr*z_0/(d**2*r1) + kr*z_1/(d &
+      **2*r1) + kr*z_0/(d**2*r0) - l*z_0/(d**2*r1) - r0**2/(d**2*r1) + &
+      r0/d**2 - z_0**2/(d**2*r1) + z_0*z_1/(d**2*r1)
+end function alpha_z_r1
+
+
+
+function alpha_x_r2(X0,X1)
+    real*8 :: X0(3), X1(3)
+    x_0 = X0(1)
+    y_0 = X0(2)
+    z_0 = X0(3)
+    x_1 = X1(1)
+    y_1 = X1(2)
+    z_1 = X1(3)
+    l = dsqrt((x_1-x_0)**2 + (y_1-y_0)**2 + (z_1-z_0)**2)
+    k_x = (x_1-x_0)/l
+    k_y = (y_1-y_0)/l
+    k_z = (z_1-z_0)/l
+    r0 = dsqrt(x_0**2+y_0**2+z_0**2)
+    r1 = dsqrt(x_1**2+y_1**2+z_1**2)
+    kr = k_x*x_0+k_y*y_0+k_z*z_0
+    d_x = x_0 - k_x*kr
+    d_y = y_0 - k_y*kr
+    d_z = z_0 - k_z*kr
+    d = dsqrt(d_x**2+d_y**2+d_z**2)
+    alpha_x_r2 = k_x/r1**2 - k_x/r0**2 - 1/r1**2 + r0**(-2) + k_x*kr**2/(d**2*r1**2) - &
+      k_x*kr**2/(d**2*r0**2) + k_x*kr*l/(d**2*r1**2) + k_x*kr*x_0/(d**2 &
+      *r1**2) - k_x*kr*x_0/(d**2*r0**2) + k_x*l*x_0/(d**2*r1**2) + k_y* &
+      kr*y_0/(d**2*r1**2) - k_y*kr*y_0/(d**2*r0**2) + k_y*l*y_0/(d**2* &
+      r1**2) + k_z*kr*z_0/(d**2*r1**2) - k_z*kr*z_0/(d**2*r0**2) - kr** &
+      2/(d**2*r1**2) + kr**2/(d**2*r0**2) - kr*l/(d**2*r1**2) - kr*x_0/ &
+      (d**2*r1**2) + kr*x_0/(d**2*r0**2) - l*x_0/(d**2*r1**2) - z_0**2/ &
+      (d**2*r1**2) + z_0*z_1/(d**2*r1**2) - k_x*kr*datan(kr/d)/d**3 + &
+      k_x*kr*datan(kr/d + l/d)/d**3 - k_x*x_0*datan(kr/d)/d**3 + k_x*x_0* &
+      datan(kr/d + l/d)/d**3 - k_y*y_0*datan(kr/d)/d**3 + k_y*y_0*datan(kr &
+      /d + l/d)/d**3 - k_z*z_0*datan(kr/d)/d**3 + k_z*z_0*datan(kr/d + l/ &
+      d)/d**3 + kr*datan(kr/d)/d**3 - kr*datan(kr/d + l/d)/d**3 + x_0* &
+      datan(kr/d)/d**3 - x_0*datan(kr/d + l/d)/d**3
+end function alpha_x_r2
+
+function alpha_y_r2(X0,X1)
+    real*8 :: X0(3), X1(3)
+    x_0 = X0(1)
+    y_0 = X0(2)
+    z_0 = X0(3)
+    x_1 = X1(1)
+    y_1 = X1(2)
+    z_1 = X1(3)
+    l = dsqrt((x_1-x_0)**2 + (y_1-y_0)**2 + (z_1-z_0)**2)
+    k_x = (x_1-x_0)/l
+    k_y = (y_1-y_0)/l
+    k_z = (z_1-z_0)/l
+    r0 = dsqrt(x_0**2+y_0**2+z_0**2)
+    r1 = dsqrt(x_1**2+y_1**2+z_1**2)
+    kr = k_x*x_0+k_y*y_0+k_z*z_0
+    d_x = x_0 - k_x*kr
+    d_y = y_0 - k_y*kr
+    d_z = z_0 - k_z*kr
+    d = dsqrt(d_x**2+d_y**2+d_z**2)
+    alpha_y_r2 = k_y/r1**2 - k_y/r0**2 - 1/r1**2 + r0**(-2) + k_x*kr*x_0/(d**2*r1**2) - &
+      k_x*kr*x_0/(d**2*r0**2) + k_x*l*x_0/(d**2*r1**2) + k_y*kr**2/(d** &
+      2*r1**2) - k_y*kr**2/(d**2*r0**2) + k_y*kr*l/(d**2*r1**2) + k_y* &
+      kr*y_0/(d**2*r1**2) - k_y*kr*y_0/(d**2*r0**2) + k_y*l*y_0/(d**2* &
+      r1**2) + k_z*kr*z_0/(d**2*r1**2) - k_z*kr*z_0/(d**2*r0**2) - kr** &
+      2/(d**2*r1**2) + kr**2/(d**2*r0**2) - kr*l/(d**2*r1**2) - kr*y_0/ &
+      (d**2*r1**2) + kr*y_0/(d**2*r0**2) - l*y_0/(d**2*r1**2) - z_0**2/ &
+      (d**2*r1**2) + z_0*z_1/(d**2*r1**2) - k_x*x_0*datan(kr/d)/d**3 + &
+      k_x*x_0*datan(kr/d + l/d)/d**3 - k_y*kr*datan(kr/d)/d**3 + k_y*kr* &
+      datan(kr/d + l/d)/d**3 - k_y*y_0*datan(kr/d)/d**3 + k_y*y_0*datan(kr &
+      /d + l/d)/d**3 - k_z*z_0*datan(kr/d)/d**3 + k_z*z_0*datan(kr/d + l/ &
+      d)/d**3 + kr*datan(kr/d)/d**3 - kr*datan(kr/d + l/d)/d**3 + y_0* &
+      datan(kr/d)/d**3 - y_0*datan(kr/d + l/d)/d**3
+end function alpha_y_r2
+
+function alpha_z_r2(X0,X1)
+    real*8 :: X0(3), X1(3)
+    x_0 = X0(1)
+    y_0 = X0(2)
+    z_0 = X0(3)
+    x_1 = X1(1)
+    y_1 = X1(2)
+    z_1 = X1(3)
+    l = dsqrt((x_1-x_0)**2 + (y_1-y_0)**2 + (z_1-z_0)**2)
+    k_x = (x_1-x_0)/l
+    k_y = (y_1-y_0)/l
+    k_z = (z_1-z_0)/l
+    r0 = dsqrt(x_0**2+y_0**2+z_0**2)
+    r1 = dsqrt(x_1**2+y_1**2+z_1**2)
+    kr = k_x*x_0+k_y*y_0+k_z*z_0
+    d_x = x_0 - k_x*kr
+    d_y = y_0 - k_y*kr
+    d_z = z_0 - k_z*kr
+    d = dsqrt(d_x**2+d_y**2+d_z**2)
+    alpha_z_r2 = k_z/r1**2 - k_z/r0**2 - 1/r1**2 + r0**(-2) + k_x*kr*x_0/(d**2*r1**2) - &
+      k_x*kr*x_0/(d**2*r0**2) + k_x*l*x_0/(d**2*r1**2) + k_y*kr*y_0/(d &
+      **2*r1**2) - k_y*kr*y_0/(d**2*r0**2) + k_y*l*y_0/(d**2*r1**2) + &
+      k_z*kr**2/(d**2*r1**2) - k_z*kr**2/(d**2*r0**2) + k_z*kr*z_0/(d** &
+      2*r1**2) - k_z*kr*z_0/(d**2*r0**2) - kr**2/(d**2*r1**2) + kr**2/( &
+      d**2*r0**2) - kr*l/(d**2*r1**2) - 2*kr*z_0/(d**2*r1**2) + kr*z_1/ &
+      (d**2*r1**2) + kr*z_0/(d**2*r0**2) - l*z_0/(d**2*r1**2) - z_0**2/ &
+      (d**2*r1**2) + z_0*z_1/(d**2*r1**2) - k_x*x_0*datan(kr/d)/d**3 + &
+      k_x*x_0*datan(kr/d + l/d)/d**3 - k_y*y_0*datan(kr/d)/d**3 + k_y*y_0 &
+      *datan(kr/d + l/d)/d**3 - k_z*kr*datan(kr/d)/d**3 + k_z*kr*datan(kr/ &
+      d + l/d)/d**3 - k_z*z_0*datan(kr/d)/d**3 + k_z*z_0*datan(kr/d + l/d &
+      )/d**3 + kr*datan(kr/d)/d**3 - kr*datan(kr/d + l/d)/d**3 + z_0*datan &
+      (kr/d)/d**3 - z_0*datan(kr/d + l/d)/d**3
+end function alpha_z_r2
+
+
+
+function alpha_x_r4(X0,X1)
+    real*8 :: X0(3), X1(3)
+    x_0 = X0(1)
+    y_0 = X0(2)
+    z_0 = X0(3)
+    x_1 = X1(1)
+    y_1 = X1(2)
+    z_1 = X1(3)
+    l = dsqrt((x_1-x_0)**2 + (y_1-y_0)**2 + (z_1-z_0)**2)
+    k_x = (x_1-x_0)/l
+    k_y = (y_1-y_0)/l
+    k_z = (z_1-z_0)/l
+    r0 = dsqrt(x_0**2+y_0**2+z_0**2)
+    r1 = dsqrt(x_1**2+y_1**2+z_1**2)
+    kr = k_x*x_0+k_y*y_0+k_z*z_0
+    d_x = x_0 - k_x*kr
+    d_y = y_0 - k_y*kr
+    d_z = z_0 - k_z*kr
+    d = dsqrt(d_x**2+d_y**2+d_z**2)
+    alpha_x_r4 = k_x/r1**4 - k_x/r0**4 - 1/r1**4 + r0**(-4) + k_x*kr**2/(d**2*r1**4) - &
+      k_x*kr**2/(d**2*r0**4) + k_x*kr*l/(d**2*r1**4) + k_x*kr*x_0/(d**2 &
+      *r1**4) - k_x*kr*x_0/(d**2*r0**4) + k_x*l*x_0/(d**2*r1**4) + k_y* &
+      kr*y_0/(d**2*r1**4) - k_y*kr*y_0/(d**2*r0**4) + k_y*l*y_0/(d**2* &
+      r1**4) + k_z*kr*z_0/(d**2*r1**4) - k_z*kr*z_0/(d**2*r0**4) - kr** &
+      2/(d**2*r1**4) + kr**2/(d**2*r0**4) - kr*l/(d**2*r1**4) - kr*x_0/ &
+      (d**2*r1**4) + kr*x_0/(d**2*r0**4) - l*x_0/(d**2*r1**4) - z_0**2/ &
+      (d**2*r1**4) + z_0*z_1/(d**2*r1**4) + (3.0d0/2.0d0)*k_x*kr**2/(d &
+      **4*r1**2) - 3.0d0/2.0d0*k_x*kr**2/(d**4*r0**2) + (3.0d0/2.0d0)* &
+      k_x*kr*l/(d**4*r1**2) + (3.0d0/2.0d0)*k_x*kr*x_0/(d**4*r1**2) - &
+      3.0d0/2.0d0*k_x*kr*x_0/(d**4*r0**2) + (3.0d0/2.0d0)*k_x*l*x_0/(d &
+      **4*r1**2) + (3.0d0/2.0d0)*k_y*kr*y_0/(d**4*r1**2) - 3.0d0/2.0d0* &
+      k_y*kr*y_0/(d**4*r0**2) + (3.0d0/2.0d0)*k_y*l*y_0/(d**4*r1**2) + &
+      (3.0d0/2.0d0)*k_z*kr*z_0/(d**4*r1**2) - 3.0d0/2.0d0*k_z*kr*z_0/(d &
+      **4*r0**2) - 3.0d0/2.0d0*kr**2/(d**4*r1**2) + (3.0d0/2.0d0)*kr**2 &
+      /(d**4*r0**2) - 3.0d0/2.0d0*kr*l/(d**4*r1**2) - 3.0d0/2.0d0*kr* &
+      x_0/(d**4*r1**2) + (3.0d0/2.0d0)*kr*x_0/(d**4*r0**2) - 3.0d0/ &
+      2.0d0*l*x_0/(d**4*r1**2) - 3.0d0/2.0d0*z_0**2/(d**4*r1**2) + ( &
+      3.0d0/2.0d0)*z_0*z_1/(d**4*r1**2) - 3.0d0/2.0d0*k_x*kr*datan(kr/d) &
+      /d**5 + (3.0d0/2.0d0)*k_x*kr*datan(kr/d + l/d)/d**5 - 3.0d0/2.0d0* &
+      k_x*x_0*datan(kr/d)/d**5 + (3.0d0/2.0d0)*k_x*x_0*datan(kr/d + l/d)/ &
+      d**5 - 3.0d0/2.0d0*k_y*y_0*datan(kr/d)/d**5 + (3.0d0/2.0d0)*k_y* &
+      y_0*datan(kr/d + l/d)/d**5 - 3.0d0/2.0d0*k_z*z_0*datan(kr/d)/d**5 + &
+      (3.0d0/2.0d0)*k_z*z_0*datan(kr/d + l/d)/d**5 + (3.0d0/2.0d0)*kr* &
+      datan(kr/d)/d**5 - 3.0d0/2.0d0*kr*datan(kr/d + l/d)/d**5 + (3.0d0/ &
+      2.0d0)*x_0*datan(kr/d)/d**5 - 3.0d0/2.0d0*x_0*datan(kr/d + l/d)/d** &
+      5
+end function alpha_x_r4
+
+function alpha_y_r4(X0,X1)
+    real*8 :: X0(3), X1(3)
+    x_0 = X0(1)
+    y_0 = X0(2)
+    z_0 = X0(3)
+    x_1 = X1(1)
+    y_1 = X1(2)
+    z_1 = X1(3)
+    l = dsqrt((x_1-x_0)**2 + (y_1-y_0)**2 + (z_1-z_0)**2)
+    k_x = (x_1-x_0)/l
+    k_y = (y_1-y_0)/l
+    k_z = (z_1-z_0)/l
+    r0 = dsqrt(x_0**2+y_0**2+z_0**2)
+    r1 = dsqrt(x_1**2+y_1**2+z_1**2)
+    kr = k_x*x_0+k_y*y_0+k_z*z_0
+    d_x = x_0 - k_x*kr
+    d_y = y_0 - k_y*kr
+    d_z = z_0 - k_z*kr
+    d = dsqrt(d_x**2+d_y**2+d_z**2)
+    alpha_y_r4 = k_y/r1**4 - k_y/r0**4 - 1/r1**4 + r0**(-4) + k_x*kr*x_0/(d**2*r1**4) - &
+      k_x*kr*x_0/(d**2*r0**4) + k_x*l*x_0/(d**2*r1**4) + k_y*kr**2/(d** &
+      2*r1**4) - k_y*kr**2/(d**2*r0**4) + k_y*kr*l/(d**2*r1**4) + k_y* &
+      kr*y_0/(d**2*r1**4) - k_y*kr*y_0/(d**2*r0**4) + k_y*l*y_0/(d**2* &
+      r1**4) + k_z*kr*z_0/(d**2*r1**4) - k_z*kr*z_0/(d**2*r0**4) - kr** &
+      2/(d**2*r1**4) + kr**2/(d**2*r0**4) - kr*l/(d**2*r1**4) - kr*y_0/ &
+      (d**2*r1**4) + kr*y_0/(d**2*r0**4) - l*y_0/(d**2*r1**4) - z_0**2/ &
+      (d**2*r1**4) + z_0*z_1/(d**2*r1**4) + (3.0d0/2.0d0)*k_x*kr*x_0/(d &
+      **4*r1**2) - 3.0d0/2.0d0*k_x*kr*x_0/(d**4*r0**2) + (3.0d0/2.0d0)* &
+      k_x*l*x_0/(d**4*r1**2) + (3.0d0/2.0d0)*k_y*kr**2/(d**4*r1**2) - &
+      3.0d0/2.0d0*k_y*kr**2/(d**4*r0**2) + (3.0d0/2.0d0)*k_y*kr*l/(d**4 &
+      *r1**2) + (3.0d0/2.0d0)*k_y*kr*y_0/(d**4*r1**2) - 3.0d0/2.0d0*k_y &
+      *kr*y_0/(d**4*r0**2) + (3.0d0/2.0d0)*k_y*l*y_0/(d**4*r1**2) + ( &
+      3.0d0/2.0d0)*k_z*kr*z_0/(d**4*r1**2) - 3.0d0/2.0d0*k_z*kr*z_0/(d &
+      **4*r0**2) - 3.0d0/2.0d0*kr**2/(d**4*r1**2) + (3.0d0/2.0d0)*kr**2 &
+      /(d**4*r0**2) - 3.0d0/2.0d0*kr*l/(d**4*r1**2) - 3.0d0/2.0d0*kr* &
+      y_0/(d**4*r1**2) + (3.0d0/2.0d0)*kr*y_0/(d**4*r0**2) - 3.0d0/ &
+      2.0d0*l*y_0/(d**4*r1**2) - 3.0d0/2.0d0*z_0**2/(d**4*r1**2) + ( &
+      3.0d0/2.0d0)*z_0*z_1/(d**4*r1**2) - 3.0d0/2.0d0*k_x*x_0*datan(kr/d &
+      )/d**5 + (3.0d0/2.0d0)*k_x*x_0*datan(kr/d + l/d)/d**5 - 3.0d0/ &
+      2.0d0*k_y*kr*datan(kr/d)/d**5 + (3.0d0/2.0d0)*k_y*kr*datan(kr/d + l &
+      /d)/d**5 - 3.0d0/2.0d0*k_y*y_0*datan(kr/d)/d**5 + (3.0d0/2.0d0)* &
+      k_y*y_0*datan(kr/d + l/d)/d**5 - 3.0d0/2.0d0*k_z*z_0*datan(kr/d)/d &
+      **5 + (3.0d0/2.0d0)*k_z*z_0*datan(kr/d + l/d)/d**5 + (3.0d0/2.0d0) &
+      *kr*datan(kr/d)/d**5 - 3.0d0/2.0d0*kr*datan(kr/d + l/d)/d**5 + ( &
+      3.0d0/2.0d0)*y_0*datan(kr/d)/d**5 - 3.0d0/2.0d0*y_0*datan(kr/d + l/ &
+      d)/d**5
+end function alpha_y_r4
+
+function alpha_z_r4(X0,X1)
+    real*8 :: X0(3), X1(3)
+    x_0 = X0(1)
+    y_0 = X0(2)
+    z_0 = X0(3)
+    x_1 = X1(1)
+    y_1 = X1(2)
+    z_1 = X1(3)
+    l = dsqrt((x_1-x_0)**2 + (y_1-y_0)**2 + (z_1-z_0)**2)
+    k_x = (x_1-x_0)/l
+    k_y = (y_1-y_0)/l
+    k_z = (z_1-z_0)/l
+    r0 = dsqrt(x_0**2+y_0**2+z_0**2)
+    r1 = dsqrt(x_1**2+y_1**2+z_1**2)
+    kr = k_x*x_0+k_y*y_0+k_z*z_0
+    d_x = x_0 - k_x*kr
+    d_y = y_0 - k_y*kr
+    d_z = z_0 - k_z*kr
+    d = dsqrt(d_x**2+d_y**2+d_z**2)
+    alpha_z_r4 = k_z/r1**4 - k_z/r0**4 - 1/r1**4 + r0**(-4) + k_x*kr*x_0/(d**2*r1**4) - &
+      k_x*kr*x_0/(d**2*r0**4) + k_x*l*x_0/(d**2*r1**4) + k_y*kr*y_0/(d &
+      **2*r1**4) - k_y*kr*y_0/(d**2*r0**4) + k_y*l*y_0/(d**2*r1**4) + &
+      k_z*kr**2/(d**2*r1**4) - k_z*kr**2/(d**2*r0**4) + k_z*kr*z_0/(d** &
+      2*r1**4) - k_z*kr*z_0/(d**2*r0**4) - kr**2/(d**2*r1**4) + kr**2/( &
+      d**2*r0**4) - kr*l/(d**2*r1**4) - 2*kr*z_0/(d**2*r1**4) + kr*z_1/ &
+      (d**2*r1**4) + kr*z_0/(d**2*r0**4) - l*z_0/(d**2*r1**4) - z_0**2/ &
+      (d**2*r1**4) + z_0*z_1/(d**2*r1**4) + (3.0d0/2.0d0)*k_x*kr*x_0/(d &
+      **4*r1**2) - 3.0d0/2.0d0*k_x*kr*x_0/(d**4*r0**2) + (3.0d0/2.0d0)* &
+      k_x*l*x_0/(d**4*r1**2) + (3.0d0/2.0d0)*k_y*kr*y_0/(d**4*r1**2) - &
+      3.0d0/2.0d0*k_y*kr*y_0/(d**4*r0**2) + (3.0d0/2.0d0)*k_y*l*y_0/(d &
+      **4*r1**2) + (3.0d0/2.0d0)*k_z*kr**2/(d**4*r1**2) - 3.0d0/2.0d0* &
+      k_z*kr**2/(d**4*r0**2) + (3.0d0/2.0d0)*k_z*kr*z_0/(d**4*r1**2) - &
+      3.0d0/2.0d0*k_z*kr*z_0/(d**4*r0**2) - 3.0d0/2.0d0*kr**2/(d**4*r1 &
+      **2) + (3.0d0/2.0d0)*kr**2/(d**4*r0**2) - 3.0d0/2.0d0*kr*l/(d**4* &
+      r1**2) - 3*kr*z_0/(d**4*r1**2) + (3.0d0/2.0d0)*kr*z_1/(d**4*r1**2 &
+      ) + (3.0d0/2.0d0)*kr*z_0/(d**4*r0**2) - 3.0d0/2.0d0*l*z_0/(d**4* &
+      r1**2) - 3.0d0/2.0d0*z_0**2/(d**4*r1**2) + (3.0d0/2.0d0)*z_0*z_1/ &
+      (d**4*r1**2) - 3.0d0/2.0d0*k_x*x_0*datan(kr/d)/d**5 + (3.0d0/2.0d0 &
+      )*k_x*x_0*datan(kr/d + l/d)/d**5 - 3.0d0/2.0d0*k_y*y_0*datan(kr/d)/ &
+      d**5 + (3.0d0/2.0d0)*k_y*y_0*datan(kr/d + l/d)/d**5 - 3.0d0/2.0d0* &
+      k_z*kr*datan(kr/d)/d**5 + (3.0d0/2.0d0)*k_z*kr*datan(kr/d + l/d)/d &
+      **5 - 3.0d0/2.0d0*k_z*z_0*datan(kr/d)/d**5 + (3.0d0/2.0d0)*k_z*z_0 &
+      *datan(kr/d + l/d)/d**5 + (3.0d0/2.0d0)*kr*datan(kr/d)/d**5 - 3.0d0 &
+      /2.0d0*kr*datan(kr/d + l/d)/d**5 + (3.0d0/2.0d0)*z_0*datan(kr/d)/d &
+      **5 - 3.0d0/2.0d0*z_0*datan(kr/d + l/d)/d**5
+end function alpha_z_r4
+
+
 function alpha_x_quadrupole(X0,X1)
     real*8 :: X0(3), X1(3)
     x_0 = X0(1)
@@ -543,5 +874,7 @@ function alpha_z_quadrupole(X0,X1)
       6*r0) - kr*l*z_0**2/(d**6*r1) + 2*r0**2*z_0**2/(d**6*r1) - 2*r0* &
       z_0**2/d**6
 end function alpha_z_quadrupole
+
+
 
 end module freq_4
